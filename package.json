@@ -1,0 +1,21 @@
+{
+  "name": "Pingu",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.1",
+    "node-cron": "^3.0.2",
+    "ping": "^0.4.2",
+    "sequelize": "^6.21.3",
+    "speedtest-net": "^2.2.0",
+    "sqlite3": "^5.0.11"
+  }
+}

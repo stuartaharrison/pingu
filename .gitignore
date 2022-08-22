@@ -102,3 +102,14 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Ignore Vscode folders
+.vscode
+
+# Ignore the generated b files
+*.sqlite
+
+# Ignore the env variable files
+.env
+.env.*
+.DS_Store
