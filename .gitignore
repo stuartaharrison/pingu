@@ -112,4 +112,9 @@ dist
 # Ignore the env variable files
 .env
 .env.*
+
+# Ignore executable when debugging on different OS
+*.exe
+
+# Ignore MacOS specific files
 .DS_Store
