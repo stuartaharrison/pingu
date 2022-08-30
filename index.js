@@ -1,7 +1,7 @@
 require('colors');
 require('./helpers/formatter');
+require('./configs/config');
 const http = require('http');
-const config = require('./configs/config');
 const createServer = require('./configs/express');
 
 console.log(`INFO: You are running in '${process.env.NODE_ENV}' mode.`.cyan);

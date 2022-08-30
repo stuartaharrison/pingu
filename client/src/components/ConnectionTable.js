@@ -7,9 +7,11 @@ import SpeedTestErrorMessage from "./SpeedTestErrorMessage";
 import SpeedTestLoader from "./SpeedTestLoader";
 
 const ConnectionTable = () => {
-    const { data, error, isLoading } = useFetchConnectionsTableQuery();
     const chartOptions = withChartOptions();
-
+    const { data, error, isLoading } = useFetchConnectionsTableQuery({}, {
+        pollingInterval: 30000
+    });
+    
     const transformLabels = useMemo(() => data ? data.map(e => e.date) : [data]);
 
     const transformData = useMemo(() => ({
@@ -18,12 +20,12 @@ const ConnectionTable = () => {
             {
                 label: 'Connected',
                 data: transformLabels.map(lbl => data ? data.find(dt => dt.date === lbl).connected : 0),
-                backgroundColor: '#20bf6b'
+                backgroundColor: chartOptions.theme.tableSeries1Bg
             },
             {
                 label: 'Incidents',
                 data: transformLabels.map(lbl => data ? data.find(dt => dt.date === lbl).incidents : 0),
-                backgroundColor: '#eb3b5a'
+                backgroundColor: chartOptions.theme.tableSeries2Bg
             }
         ]
     }), [data, transformLabels]);

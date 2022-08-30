@@ -44,7 +44,9 @@ root.render(
                 tableWrapperBg: '#778ca3',
                 tableWrapperColor: '#ffffff',
                 tableGridColorX: '#a5b1c2',
-                tableGridColorY: '#a5b1c2'
+                tableGridColorY: '#a5b1c2',
+                tableSeries1Bg: '#20bf6b',
+                tableSeries2Bg: '#eb3b5a'
             }}>
                 <App />
             </ThemeProvider>

@@ -4,12 +4,14 @@ import { useFetchLastSpeedTestQuery } from "../redux/speedtest.api";
 import moment from "moment";
 
 const LastSpeedTest = () => {
-    const { data, error, isLoading } = useFetchLastSpeedTestQuery();
+    const { data, error, isLoading } = useFetchLastSpeedTestQuery({}, {
+        pollingInterval: 30000
+    });
     const { createdAt } = data || {};
 
     const titleToDisplay = data && createdAt
         ? `Last Test (${moment(createdAt).format('YYYY-MM-DD HH:mm')})`
-        : `Last Test`
+        : `Last Test (Not Yet Run)`
 
     return <SpeedTest
         title={titleToDisplay}

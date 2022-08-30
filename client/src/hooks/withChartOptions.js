@@ -5,6 +5,13 @@ const withChartOptions = () => {
 
     return {
         responsive: true,
+        plugins: {
+            legend: {
+                labels: {
+                    color: theme.tableGridColorX
+                }
+            }
+        },
         scales: {
             x: {
                 stacked: true,
@@ -24,6 +31,10 @@ const withChartOptions = () => {
                     color: theme.tableGridColorY
                 }
             }
+        },
+        theme: {
+            tableSeries1Bg: theme.tableSeries1Bg,
+            tableSeries2Bg: theme.tableSeries2Bg
         }
     }
 };
