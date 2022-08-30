@@ -5,14 +5,10 @@ module.exports = (sequelize) => {
         destination: {
             type: DataTypes.STRING(254),
             allowNull: false
-        },
-        wasReached: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false
         }
     };
 
     const options = { };
 
-    return sequelize.define('Result', attributes, options);
+    return sequelize.define('Incident', attributes, options);
 };

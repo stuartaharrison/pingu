@@ -1,38 +1,14 @@
 import React, { useMemo } from "react";
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-  } from 'chart.js';
 import { Bar } from "react-chartjs-2";
 import { useFetchConnectionsTableQuery } from "../redux/connections.api";
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
+import withChartOptions from "../hooks/withChartOptions";
+import styled from "styled-components";
+import SpeedTestErrorMessage from "./SpeedTestErrorMessage";
+import SpeedTestLoader from "./SpeedTestLoader";
 
 const ConnectionTable = () => {
     const { data, error, isLoading } = useFetchConnectionsTableQuery();
-
-    // const transformData = useMemo(() => [], [data]);
-
-    // const primaryAxis = useMemo(() => ({
-    //     getValue: (datum) => datum.date
-    // }), []);
-
-    // const secondaryAxis = useMemo(() => ({
-    //     getValue: (datum) => datum.uptime,
-    //     stacked: true
-    // }), []);
+    const chartOptions = withChartOptions();
 
     const transformLabels = useMemo(() => data ? data.map(e => e.date) : [data]);
 
@@ -41,37 +17,36 @@ const ConnectionTable = () => {
         datasets: [
             {
                 label: 'Connected',
-                data: transformLabels.map(lbl => data ? data.find(dt => dt.date === lbl).uptime : 0),
-                backgroundColor: 'green'
+                data: transformLabels.map(lbl => data ? data.find(dt => dt.date === lbl).connected : 0),
+                backgroundColor: '#20bf6b'
             },
             {
                 label: 'Incidents',
                 data: transformLabels.map(lbl => data ? data.find(dt => dt.date === lbl).incidents : 0),
-                backgroundColor: 'red'
+                backgroundColor: '#eb3b5a'
             }
         ]
     }), [data, transformLabels]);
 
+    const Wrapper = styled.div`
+        position: relative;
+        display: flex;
+        border: 1px solid ${props => props.theme.tableWrapperBg};
+        border-radius: 20px;
+        color: ${props => props.theme.tableWrapperColor};
+        background-color: ${props => props.theme.tableWrapperBg};
+        padding: 30px;
+        min-height: 500px;
+    `;
+
     return (
-        <div>
-            {data && JSON.stringify(data)}
-            {data && (
-                <Bar 
-                    options={{
-                        responsive: true,
-                        scales: {
-                            x: {
-                                stacked: true
-                            },
-                            y: {
-                                stacked: true
-                            }
-                        }
-                    }}
-                    data={transformData} 
-                />
+        <Wrapper>
+            {isLoading && <SpeedTestLoader />}
+            {!isLoading && (error || !data) && <SpeedTestErrorMessage />}
+            {!isLoading && data && (
+                <Bar options={chartOptions} data={transformData} />
             )}
-        </div>
+        </Wrapper>
     )
 };
 

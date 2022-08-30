@@ -1,10 +1,10 @@
 const cron = require('node-cron');
 const ping = require('ping');
-const { createResultAsync } = require('../services/results.service');
+const config = require('../configs/config');
+const { createIncidentAsync } = require('../services/incidents.service');
 
-// TODO: allow configuration of the ping interval?
-// TODO: allow to add multiple hosts to ping against
-const servers = ['8.8.8.8', '8.8.4.4', '1.1.1.1'];
+const interval = config.PING_INTERVAL;
+const servers = config.PINGABLE_SERVERS;
 
 // Makes a check to confirm connectivity.
 // I've found that one ping can give a false negative
@@ -26,7 +26,10 @@ const checkConnectionResults = (results) => {
     return areTrue.length > 0;
 };
 
-cron.schedule('*/2 * * * *', () => {
+const cronSchedule = `*/${interval} * * * *`;
+console.log(`INFO: Ping Interval: '${interval}' - CRON: '${cronSchedule}'`.cyan);
+
+cron.schedule(cronSchedule, () => {
     console.log(`INFO: Checking connection to the internet.`.cyan);
 
     // build the promises and then basically wait for all the pings to resolve
@@ -38,6 +41,10 @@ cron.schedule('*/2 * * * *', () => {
     Promise.all(promises).then(async results => {
         let isConnected = checkConnectionResults(results);
         let destinations = servers.join(', ');
-        await createResultAsync(destinations, isConnected);
+
+        // only record when there is a connection drop!
+        if (!isConnected) {
+            await createIncidentAsync(destinations);
+        }
     });
 });

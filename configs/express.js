@@ -13,6 +13,16 @@ module.exports = () => {
     for (var i = 0; i < routes.length; i++) {
         app.use('/api', routes[i]);
     }
+
+    // serve the front-end client application only when in production mode
+    if (process.env.NODE_ENV === 'production') {
+        app.use(express.static(path.join(__dirname, '../client/build')));
+        app.get('*', (req, res) =>
+            res.sendFile(path.resolve(__dirname, '../', 'client', 'build', 'index.html'))
+        );
+    } else {
+        app.get('*', (req, res) => res.send('Please set to production'));
+    }
     
     return app;
 };

@@ -5,7 +5,7 @@ const connectionsApi = storeApi.enhanceEndpoints({
 }).injectEndpoints({
     endpoints: (builder) => ({
         fetchConnectionsTable: builder.query({
-            query: () => `results/incidents`,
+            query: () => `incidents/chart`,
             providesTags: (result, error, arg) => ['ConnectionsTable']
         })
     })

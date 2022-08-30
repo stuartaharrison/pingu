@@ -1,8 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import { AverageSpeedTest, ConnectionTable, Container, Header, LastSpeedTest } from "./components";
+import { 
+    AverageSpeedTest, 
+    ConnectionTable, 
+    Container,
+    FlexRow,
+    Header, 
+    HeaderTitle,
+    HeaderToolbar,
+    LastSpeedTest 
+} from "./components";
 
 const App = () => {
+
     const Application = styled.div`
         display: flex;
         flex-wrap: wrap;
@@ -17,13 +27,17 @@ const App = () => {
     return (
         <Application>
             <Header>
-
+                <HeaderToolbar>
+                    <HeaderTitle>
+                        <h1>Pingu</h1>
+                    </HeaderTitle>
+                </HeaderToolbar>
             </Header>
             <Container>
-                <div>
+                <FlexRow className="mb-2">
                     <AverageSpeedTest />
                     <LastSpeedTest />
-                </div>
+                </FlexRow>
                 <div>
                     <ConnectionTable />
                 </div>

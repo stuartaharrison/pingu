@@ -1,7 +1,7 @@
-const resultsRoutes = require('./results.routes');
+const incidentRoutes = require('./incident.routes');
 const speedTestRoutes = require('./speedtest.routes');
 
 module.exports = [
-    resultsRoutes,
+    incidentRoutes,
     speedTestRoutes
 ];

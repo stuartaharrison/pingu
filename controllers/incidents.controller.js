@@ -1,14 +1,14 @@
 const SequelizeQP = require('sequelizeqp');
 const {
-    fetchResultsAsync,
-    fetchResultsIncidentTableAsync
-} = require('../services/results.service');
+    fetchIncidentsAsync,
+    fetchIncidentsTableAsync
+} = require('../services/incidents.service');
 
-const fetchResultsEndpoint = async (req, res) => {
+const fetchIncidentsEndpoint = async (req, res) => {
     try {
         const sequelizeQP = new SequelizeQP({ dateOnlyCompare: true });
         const parsed = sequelizeQP.parse(req.query);
-        const result = await fetchResultsAsync(parsed);
+        const result = await fetchIncidentsAsync(parsed);
         
         res.status(200).json(result);
     }
@@ -19,9 +19,10 @@ const fetchResultsEndpoint = async (req, res) => {
     }
 };
 
-const fetchResultsIncidentsTableEndpoint = async (req, res) => {
+const fetchIncidentsTableEndpoint = async (req, res) => {
     try {
-        var tableData = await fetchResultsIncidentTableAsync();
+        // TODO: grab the date in the query
+        var tableData = await fetchIncidentsTableAsync();
         res.status(200).json(tableData);
     }
     catch (err) {
@@ -33,6 +34,6 @@ const fetchResultsIncidentsTableEndpoint = async (req, res) => {
 };
 
 module.exports = {
-    fetchResultsEndpoint,
-    fetchResultsIncidentsTableEndpoint
+    fetchIncidentsEndpoint,
+    fetchIncidentsTableEndpoint
 };
