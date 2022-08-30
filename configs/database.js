@@ -10,8 +10,7 @@ async function initialize() {
     const sequelize = new Sequelize({
         dialect: 'sqlite',
         storage: `${config.DB_FILE_NAME}.sqlite`,
-        logging: true
-        //logging: config.DB_LOGGING_ENABLED
+        logging: config.DB_LOGGING_ENABLED
     });
 
     // init models and add them to the exported db object
